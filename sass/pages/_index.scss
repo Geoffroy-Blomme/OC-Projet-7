@@ -1,0 +1,18 @@
+.main-header {
+  background-color: red($color: #000000);
+  &__logo-container {
+    height: 93px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 42px;
+    .main-header__logo__link {
+      height: 100%;
+      width: auto;
+      .main-header__logo-img {
+        height: 100%;
+        width: auto;
+      }
+    }
+  }
+}

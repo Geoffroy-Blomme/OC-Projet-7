@@ -1,0 +1,26 @@
+.search-box {
+  display: inline-block;
+  width: 100%;
+  border-radius: 5px;
+  position: relative;
+  margin-top: 17px;
+  input[type="text"] {
+    background-color: $bg-grey;
+    border: none;
+    padding: 15px;
+    &:hover,
+    &:focus,
+    &:active {
+      box-shadow: none;
+      border-color: none;
+    }
+  }
+
+  .search-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    color: black;
+  }
+}
