@@ -1,3 +1,6 @@
 body {
   @include common-text-font-family;
+  .hidden {
+    display: none;
+  }
 }

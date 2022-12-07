@@ -1,0 +1,53 @@
+.card {
+  width: auto;
+  height: 364px;
+  border-radius: $common-border-radius;
+  border: none;
+  margin-top: 15px;
+  &-img-top {
+    width: 100%;
+    height: 178px;
+    background-color: #c7bebe;
+  }
+  &-body {
+    background-color: $bg-grey;
+    &__top-side {
+      display: flex;
+      font-size: 18px;
+
+      &__title {
+      }
+      &__time {
+        margin-left: auto;
+        font-weight: 700;
+        &__text {
+          margin-left: 5px;
+        }
+      }
+    }
+    &__bottom-side {
+      display: flex;
+      margin-top: 20px;
+      font-size: 12px;
+      &__ingredients {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+
+        .card-body__bottom-side__ingredient {
+          &__title {
+            font-weight: bold;
+            &::after {
+              content: ": ";
+            }
+          }
+        }
+      }
+
+      &__description {
+        width: 50%;
+        @include small-text-font-family;
+      }
+    }
+  }
+}

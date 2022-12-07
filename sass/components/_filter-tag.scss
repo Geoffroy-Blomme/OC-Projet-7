@@ -1,0 +1,29 @@
+.filter-tags {
+  .filter-tag {
+    background-color: red;
+    border-radius: $common-border-radius;
+    display: inline-flex;
+    align-items: center;
+    color: $filter-btn-color;
+    padding: 10px 25px;
+    &__text {
+      font-weight: 700;
+    }
+    &__icon {
+      color: $filter-btn-color;
+      margin-left: 20px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    &-primary {
+      background-color: $primary;
+    }
+    &-secondary {
+      background-color: $secondary;
+    }
+    &-tertiary {
+      background-color: $tertiary;
+    }
+  }
+}

@@ -16,3 +16,104 @@
     }
   }
 }
+
+.filter-buttons-container {
+  display: flex;
+  margin-top: 20px;
+
+  .filter-button-container {
+    border-radius: $common-border-radius;
+    &-primary {
+      background-color: $primary;
+    }
+    .filter-button__input {
+      display: none;
+    }
+    .dropdown-list {
+      display: none;
+    }
+  }
+  .opened {
+    .btn {
+      width: 100%;
+    }
+    .filter-button__input {
+      display: block;
+    }
+
+    ::placeholder {
+      color: $filter-btn-color;
+      opacity: 50%;
+    }
+    flex-direction: column;
+    position: relative;
+    .filter-button__input {
+      position: absolute;
+      left: 19px;
+      top: 0;
+      height: 69px;
+      width: 80%;
+      border: none;
+      font-weight: 700;
+      color: $filter-btn-color;
+      &:focus {
+        outline: none;
+      }
+      &-primary {
+        background-color: $primary;
+      }
+    }
+    .dropdown-list {
+      color: $filter-btn-color;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      max-height: 350px;
+      width: 400px;
+      li {
+        margin-left: 19px;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+.filter-tags {
+  margin-top: 20px;
+  .filter-tag {
+  }
+}
+.recipe-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+
+  .recipe-thumb {
+    width: 33.333%;
+    // On va avoir 3 thumbs par lignes
+
+    // Target les premieres thumbs de chaque ligne
+    &:nth-of-type(3n + 1) {
+      .card {
+        margin-right: $recipe-thumb-card-margin;
+      }
+    }
+
+    // Target les deuxiemes thumbs de chaque ligne
+    &:nth-of-type(3n + 2) {
+      .card {
+        margin-left: calc($recipe-thumb-card-margin / 2);
+        margin-right: calc($recipe-thumb-card-margin / 2);
+      }
+    }
+
+    // Target les dernieres thumbs de chaque ligne
+    &:nth-of-type(3n) {
+      .card {
+        margin-left: $recipe-thumb-card-margin;
+      }
+    }
+  }
+}

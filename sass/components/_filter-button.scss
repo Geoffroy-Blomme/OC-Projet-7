@@ -1,0 +1,55 @@
+.filter-buttons-container {
+  .btn {
+    color: $filter-btn-color;
+    height: 69px;
+    width: 170px;
+    border-radius: $common-border-radius;
+    font-size: 18px;
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: center;
+
+    &:hover {
+      color: $filter-btn-color;
+    }
+    &-primary {
+      &:hover {
+        background-color: $primary;
+      }
+    }
+    &-secondary {
+      &:hover {
+        background-color: $secondary;
+      }
+    }
+    &-tertiary {
+      &:hover {
+        background-color: $tertiary;
+      }
+    }
+    .filter-buttons__arrow {
+      transform: rotate(0);
+      transition: transform 0.2s ease-in-out;
+      margin-left: auto;
+    }
+    &-tertiary {
+      @include button-variant(
+        $tertiary,
+        darken($tertiary, 7.5%),
+        darken($tertiary, 10%),
+        lighten($tertiary, 5%),
+        lighten($tertiary, 10%),
+        darken($tertiary, 30%)
+      );
+    }
+  }
+}
+.filter-buttons-container {
+  .opened {
+    .btn {
+      .filter-buttons__arrow {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}

@@ -1,7 +1,12 @@
-@import "./utils/mixins";
-
-@import "./base/normalize";
 @import "./base/colors";
+@import "./../node_modules/bootstrap/scss/bootstrap";
+
+@import "./utils/mixins";
+@import "./utils/variables";
+@import "./base/normalize";
 @import "./base/common";
 @import "./pages/index";
 @import "./components/search-box";
+@import "./components/filter-button";
+@import "./components/filter-tag";
+@import "./components/recipe-thumb";
