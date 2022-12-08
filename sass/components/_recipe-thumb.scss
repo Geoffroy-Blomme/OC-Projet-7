@@ -3,10 +3,12 @@
   height: 364px;
   border-radius: $common-border-radius;
   border: none;
-  margin-top: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   &-img-top {
     width: 100%;
-    height: 178px;
+    flex: 0 0 178px;
     background-color: #c7bebe;
   }
   &-body {
@@ -27,7 +29,7 @@
     }
     &__bottom-side {
       display: flex;
-      margin-top: 20px;
+      margin-top: 10px;
       font-size: 12px;
       &__ingredients {
         display: flex;
@@ -46,6 +48,13 @@
 
       &__description {
         width: 50%;
+        &__text {
+          height: 110px;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 6;
+          -webkit-box-orient: vertical;
+        }
         @include small-text-font-family;
       }
     }

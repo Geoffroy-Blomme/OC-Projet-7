@@ -1,22 +1,21 @@
 import { recipes } from "../data/recipes.js";
-
+import { recipeFactory } from "./factories/recipe.js";
 const filterButtons = document.querySelectorAll(
   ".filter-buttons-container button"
 );
-
-const setFilterButtonsInnerText = () => {
-  filterButtons.forEach((button) => {
-    console.log(button.innerText);
-    //button.innerText = button.innerText + button.getAttribute("data-value");
-  });
-};
+const recipeThumbs = document.querySelector(".recipe-thumbs");
 
 const filterButtonIsClicked = (evt) => {
   const button = evt.currentTarget;
   button.parentNode.classList.toggle("opened");
   const buttonSpan = button.querySelector(".filter-button__text");
-  console.log(buttonSpan);
   buttonSpan.classList.toggle("hidden");
+};
+
+const generateRecipThumbs = (data) => {
+  const recipeModel = recipeFactory();
+  const allRecipes = recipeModel.getRecipesThumbDOM(data);
+  recipeThumbs.innerHTML = allRecipes;
 };
 
 const setupEventListeners = () => {
@@ -25,11 +24,14 @@ const setupEventListeners = () => {
       filterButtonIsClicked(evt);
     });
   });
-  setFilterButtonsInnerText();
 };
 const init = () => {
   setupEventListeners();
   console.log(recipes);
+  const recipeModal = recipeFactory();
+  const recipeDOM = recipeModal.getRecipeThumbDOM(recipes[0]);
+  console.log(recipeDOM);
+  generateRecipThumbs(recipes);
 };
 
 init();

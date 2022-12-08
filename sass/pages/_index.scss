@@ -20,9 +20,10 @@
 .filter-buttons-container {
   display: flex;
   margin-top: 20px;
-
   .filter-button-container {
     border-radius: $common-border-radius;
+    margin-right: 20px;
+
     &-primary {
       background-color: $primary;
     }
@@ -92,6 +93,7 @@
 
   .recipe-thumb {
     width: 33.333%;
+    margin-top: 15px;
     // On va avoir 3 thumbs par lignes
 
     // Target les premieres thumbs de chaque ligne
