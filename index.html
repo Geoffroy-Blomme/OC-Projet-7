@@ -40,6 +40,7 @@
                   class="form-control"
                   placeholder="Rechercher une recette"
                   type="text"
+                  id="repice-seach-input"
                 />
                 <button class="btn btn-link search-btn">
                   <span class="fa-solid fa-magnifying-glass fa-lg"></span>
@@ -69,6 +70,7 @@
             class="filter-button__input filter-button__input-primary"
             type="text"
             placeholder="Rechercher un ingrédient"
+            id="ingredients-search-input"
           />
           <ul class="dropdown-list">
             <li>Lait de coco</li>
@@ -79,16 +81,47 @@
             <li>Thon rouge</li>
           </ul>
         </div>
-        <button type="button" class="btn btn-secondary">
-          <span class="filter-button__text">Appareils</span>
 
-          <span class="fa-solid fa-angle-down filter-buttons__arrow"></span>
-        </button>
-        <button type="button" class="btn btn-tertiary">
-          <span class="filter-button__text">Ustensils</span>
-
-          <span class="fa-solid fa-angle-down filter-buttons__arrow"></span>
-        </button>
+        <div class="filter-button-container filter-button-container-secondary">
+          <button type="button" class="btn btn-secondary filter-button">
+            <span class="filter-button__text">Appareils</span>
+            <span class="fa-solid fa-angle-down filter-buttons__arrow"></span>
+          </button>
+          <input
+            class="filter-button__input filter-button__input-secondary"
+            type="text"
+            placeholder="Rechercher un Appareil"
+            id="appliance-search-input"
+          />
+          <ul class="dropdown-list">
+            <li>Lait de coco</li>
+            <li>Sucre</li>
+            <li>Concombre</li>
+            <li>Sucre</li>
+            <li>Glacons</li>
+            <li>Thon rouge</li>
+          </ul>
+        </div>
+        <div class="filter-button-container filter-button-container-tertiary">
+          <button type="button" class="btn btn-tertiary filter-button">
+            <span class="filter-button__text">Ustensils</span>
+            <span class="fa-solid fa-angle-down filter-buttons__arrow"></span>
+          </button>
+          <input
+            class="filter-button__input filter-button__input-tertiary"
+            type="text"
+            placeholder="Rechercher un Ustensil"
+            id="ustensils-search-input"
+          />
+          <ul class="dropdown-list">
+            <li>Lait de coco</li>
+            <li>Sucre</li>
+            <li>Concombre</li>
+            <li>Sucre</li>
+            <li>Glacons</li>
+            <li>Thon rouge</li>
+          </ul>
+        </div>
       </div>
       <section class="recipe-thumbs container"></section>
     </main>

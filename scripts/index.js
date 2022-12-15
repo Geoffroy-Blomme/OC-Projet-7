@@ -4,7 +4,10 @@ const filterButtons = document.querySelectorAll(
   ".filter-buttons-container button"
 );
 const recipeThumbs = document.querySelector(".recipe-thumbs");
-
+const repiceSeachInput = document.querySelector("#repice-seach-input");
+const ingredientsSearchInput = document.querySelector(
+  "#ingredients-search-input"
+);
 const filterButtonIsClicked = (evt) => {
   const button = evt.currentTarget;
   button.parentNode.classList.toggle("opened");
@@ -18,19 +21,28 @@ const generateRecipThumbs = (data) => {
   recipeThumbs.innerHTML = allRecipes;
 };
 
+const repiceSearchInputKeyDown = (evt) => {
+  const nbOfCharacters = parseInt(evt.currentTarget.value.length);
+  if (nbOfCharacters >= 3) {
+    startRecipeSearch();
+  }
+};
+
+const startRecipeSearch = () => {};
+
 const setupEventListeners = () => {
   filterButtons.forEach((button) => {
     button.addEventListener("click", (evt) => {
       filterButtonIsClicked(evt);
     });
   });
+  repiceSeachInput.addEventListener("keyup", repiceSearchInputKeyDown);
 };
 const init = () => {
   setupEventListeners();
   console.log(recipes);
   const recipeModal = recipeFactory();
   const recipeDOM = recipeModal.getRecipeThumbDOM(recipes[0]);
-  console.log(recipeDOM);
   generateRecipThumbs(recipes);
 };
 

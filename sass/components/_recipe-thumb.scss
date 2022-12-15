@@ -39,9 +39,6 @@
         .card-body__bottom-side__ingredient {
           &__title {
             font-weight: bold;
-            &::after {
-              content: ": ";
-            }
           }
         }
       }

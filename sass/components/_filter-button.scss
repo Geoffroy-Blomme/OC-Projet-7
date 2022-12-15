@@ -1,7 +1,7 @@
 .filter-buttons-container {
   .btn {
     color: $filter-btn-color;
-    height: 69px;
+    height: $filter-button-height;
     width: 170px;
     border-radius: $common-border-radius;
     font-size: 18px;

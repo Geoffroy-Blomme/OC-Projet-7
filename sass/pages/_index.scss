@@ -22,10 +22,15 @@
   margin-top: 20px;
   .filter-button-container {
     border-radius: $common-border-radius;
-    margin-right: 20px;
-
+    margin: 0 20px auto 0;
     &-primary {
       background-color: $primary;
+    }
+    &-secondary {
+      background-color: $secondary;
+    }
+    &-tertiary {
+      background-color: $tertiary;
     }
     .filter-button__input {
       display: none;
@@ -52,7 +57,7 @@
       position: absolute;
       left: 19px;
       top: 0;
-      height: 69px;
+      height: calc($filter-button-height - 1px);
       width: 80%;
       border: none;
       font-weight: 700;
@@ -62,6 +67,12 @@
       }
       &-primary {
         background-color: $primary;
+      }
+      &-secondary {
+        background-color: $secondary;
+      }
+      &-tertiary {
+        background-color: $tertiary;
       }
     }
     .dropdown-list {
