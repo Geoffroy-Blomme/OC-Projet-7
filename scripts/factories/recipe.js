@@ -68,7 +68,7 @@ export function recipeFactory() {
     let dom = ``;
 
     array.forEach((elt) => {
-      dom += `<li filtering="false" data-value="${tagType}"><span>${elt}</span></li>`;
+      dom += `<li data-value="${tagType}"><span>${elt}</span></li>`;
     });
     return dom;
   }
