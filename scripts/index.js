@@ -51,7 +51,7 @@ const generateRecipThumbs = (data) => {
   recipeThumbs.innerHTML = allRecipes;
 };
 
-const repiceSearchInputKeyDown = (evt) => {
+const recipeSearchInputKeyDown = (evt) => {
   let inputValue = repiceSeachInput.value;
   const nbOfCharacters = parseInt(inputValue.length);
 
@@ -104,46 +104,49 @@ const startRecipeSearch = (arrayToSearchIn, inputValue) => {
   return arrayContainKeyword;
 };
 
+const checkIfRecipeHasAllAppliances = (recipe) => {
+  if (currentTags["appliances"].length === 0) {
+    return true;
+  }
+  for (let i = 0; i < currentTags["appliances"].length; i++) {
+    if (!searchRecipeForAppliance(recipe, currentTags["appliances"][i])) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const checkIfRecipeHasAllIngredients = (recipe) => {
+  if (currentTags["ingredients"].length === 0) {
+    return true;
+  }
+  for (let i = 0; i < currentTags["ingredients"].length; i++) {
+    if (!searchRecipeForIngredient(recipe, currentTags["ingredients"][i])) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const checkIfRecipeHasAllUstensils = (recipe) => {
+  if (currentTags["ustensils"].length === 0) {
+    return true;
+  }
+  for (let i = 0; i < currentTags["ustensils"].length; i++) {
+    if (!searchRecipeForUstensil(recipe, currentTags["ustensils"][i])) {
+      return false;
+    }
+  }
+  return true;
+};
+
 const searchRepicesThatContainsTags = (arrayToSearchIn) => {
   let finalArray = [];
   for (let i = 0; i < arrayToSearchIn.length; i++) {
-    // bool va verifier que la recette va contenir chaque tag.
-    let bool = true;
-    for (let t = 0; t < currentTags["ingredients"].length; t++) {
-      if (
-        searchRecipeForIngredient(
-          arrayToSearchIn[i],
-          currentTags["ingredients"][t]
-        )
-      ) {
-        bool = true;
-      } else {
-        bool = false;
-        break;
-      }
-    }
-    for (let y = 0; y < currentTags["appliances"].length; y++) {
-      if (arrayToSearchIn[i].appliance.includes(currentTags["appliances"][y])) {
-        bool = true;
-      } else {
-        bool = false;
-        break;
-      }
-      for (let p = 0; p < currentTags["ustensils"].length; p++) {
-        if (
-          searchRecipeForUstensil(
-            arrayToSearchIn[i],
-            currentTags["ustensils"][p]
-          )
-        ) {
-          bool = true;
-        } else {
-          bool = false;
-          break;
-        }
-      }
-    }
-
+    const bool =
+      checkIfRecipeHasAllIngredients(arrayToSearchIn[i]) &&
+      checkIfRecipeHasAllAppliances(arrayToSearchIn[i]) &&
+      checkIfRecipeHasAllUstensils(arrayToSearchIn[i]);
     if (bool) {
       //On ajoute seulement si l'element n'est pas deja present dans l'array
       if (finalArray.indexOf(arrayToSearchIn[i]) === -1) {
@@ -217,6 +220,10 @@ const searchRecipeForUstensil = (recipe, keyword) => {
   return false;
 };
 
+const searchRecipeForAppliance = (recipe, keyword) => {
+  return recipe.appliance.toLowerCase().includes(keyword.toLowerCase());
+};
+
 const emptyRecipeContainer = () => {
   recipeThumbs.innerHTML = "";
 };
@@ -232,49 +239,42 @@ const ingredientsSearchInputUpdateDropdown = (evt) => {
   if (evt) {
     // Si l'utilisateur supprime un caractere, il faut refaire une recherche
     if (evt.keyCode == "8") {
-      repiceSearchInputKeyDown();
+      recipeSearchInputKeyDown();
     }
   }
   let finalArray = [];
-  console.log(currentlyShownIngredients);
-  for (let i = 0; i < currentlyShownIngredients.length; i++) {
+  currentlyShownIngredients.map((ingredient) => {
     const ingredientsSearchValueLowerCase =
       ingredientsSearchInput.value.toLowerCase();
-    const currentlyShownIngredientLowerCase =
-      currentlyShownIngredients[i].toLowerCase();
-
+    const currentlyShownIngredientLowerCase = ingredient.toLowerCase();
     if (
       currentlyShownIngredientLowerCase.includes(
         ingredientsSearchValueLowerCase
       )
     ) {
-      finalArray.push(currentlyShownIngredients[i]);
+      finalArray.push(ingredient);
     }
-  }
+  });
   ingredientsDropDownAdd(finalArray);
 };
 
-const ingredientsDropdownListDOM = (arrayToSearchIn) => {
+const generateDropdownListDOM = (arrayToSearchIn, tagType) => {
   const recipeModal = recipeFactory();
-  const finalDom = recipeModal.getDropdownListDOM(
-    arrayToSearchIn,
-    "ingredients"
-  );
+  const finalDom = recipeModal.getDropdownListDOM(arrayToSearchIn, tagType);
   return finalDom;
 };
 
 // Renvoie un array contenant tous les ingredients presents dans l'array en argument, sans doublons.
 const allIngredients = (arrayOfRecipes) => {
   let finalArray = [];
-  for (let i = 0; i < arrayOfRecipes.length; i++) {
-    for (let t = 0; t < arrayOfRecipes[i].ingredients.length; t++) {
+  arrayOfRecipes.map((recipe) => {
+    recipe.ingredients.map((ingredientObject) => {
       addEltIfNotInArrayCaseInsensitive(
-        arrayOfRecipes[i].ingredients[t].ingredient,
+        ingredientObject.ingredient,
         finalArray
       );
-    }
-  }
-
+    });
+  });
   return finalArray;
 };
 
@@ -283,43 +283,33 @@ const ustensilsSearchInputUpdateDropdown = (evt) => {
   if (evt) {
     // Si l'utilisateur supprime un caractere, il faut refaire une recherche
     if (evt.keyCode == "8") {
-      repiceSearchInputKeyDown();
+      recipeSearchInputKeyDown();
     }
   }
   let finalArray = [];
 
-  for (let i = 0; i < currentlyShownUstensils.length; i++) {
+  currentlyShownUstensils.map((ustensil) => {
     const ustensilsSearchValueLowerCase =
       ustensilsSearchInput.value.toLowerCase();
-    const currentlyShownUstensilsLowerCase =
-      currentlyShownUstensils[i].toLowerCase();
-
+    const currentlyShownUstensilsLowerCase = ustensil.toLowerCase();
     if (
       currentlyShownUstensilsLowerCase.includes(ustensilsSearchValueLowerCase)
     ) {
-      finalArray.push(currentlyShownUstensils[i]);
+      finalArray.push(ustensil);
     }
-  }
+  });
+
   ustensilsDropDownAdd(finalArray);
 };
 
-const ustensilsDropdownListDOM = (arrayToSearchIn) => {
-  const recipeModal = recipeFactory();
-  const finalDom = recipeModal.getDropdownListDOM(arrayToSearchIn, "ustensils");
-  return finalDom;
-};
-
+// Renvoie tous les ustensils qui se trouvent dans les recettes contenues dans l'array mis en parametre, sans doublons
 const allUstensils = (arrayOfRecipes) => {
   let finalArray = [];
-  for (let i = 0; i < arrayOfRecipes.length; i++) {
-    for (let t = 0; t < arrayOfRecipes[i].ustensils.length; t++) {
-      addEltIfNotInArrayCaseInsensitive(
-        arrayOfRecipes[i].ustensils[t],
-        finalArray
-      );
-    }
-  }
-
+  arrayOfRecipes.map((recipe) => {
+    recipe.ustensils.map((ustensil) => {
+      addEltIfNotInArrayCaseInsensitive(ustensil, finalArray);
+    });
+  });
   return finalArray;
 };
 
@@ -328,42 +318,31 @@ const appliancesSearchInputUpdateDropdown = (evt) => {
   if (evt) {
     // Si l'utilisateur supprime un caractere, il faut refaire une recherche
     if (evt.keyCode == "8") {
-      repiceSearchInputKeyDown();
+      recipeSearchInputKeyDown();
     }
   }
   let finalArray = [];
 
-  for (let i = 0; i < currentlyShownAppliances.length; i++) {
+  currentlyShownAppliances.map((appliance) => {
     const appliancesSearchValueLowerCase =
       appliancesSearchInput.value.toLowerCase();
-    const currentlyShownApplianceLowerCase =
-      currentlyShownAppliances[i].toLowerCase();
-
+    const currentlyShownApplianceLowerCase = appliance.toLowerCase();
     if (
       currentlyShownApplianceLowerCase.includes(appliancesSearchValueLowerCase)
     ) {
-      finalArray.push(currentlyShownAppliances[i]);
+      finalArray.push(appliance);
     }
-  }
-  console.log(currentlyShownAppliances);
-  console.log(finalArray);
-  appliancesDropDownAdd(finalArray);
-};
+  });
 
-const appliancesDropdownListDOM = (arrayToSearchIn) => {
-  const recipeModal = recipeFactory();
-  const finalDom = recipeModal.getDropdownListDOM(
-    arrayToSearchIn,
-    "appliances"
-  );
-  return finalDom;
+  appliancesDropDownAdd(finalArray);
 };
 
 const allAppliances = (arrayOfRecipes) => {
   let finalArray = [];
-  for (let i = 0; i < arrayOfRecipes.length; i++) {
-    addEltIfNotInArrayCaseInsensitive(arrayOfRecipes[i].appliance, finalArray);
-  }
+  arrayOfRecipes.map((recipe) => {
+    addEltIfNotInArrayCaseInsensitive(recipe.appliance, finalArray);
+  });
+
   return finalArray;
 };
 
@@ -372,10 +351,13 @@ const addTag = (evt) => {
   const value = evt.currentTarget.querySelector("span").innerText;
   toggleTagValue(dataValue, value);
   makeFilterTag(evt.currentTarget, value);
-  repiceSearchInputKeyDown();
+  recipeSearchInputKeyDown();
   ingredientsSearchInputUpdateDropdown();
+  ingredientsSearchInput.value = "";
   appliancesSearchInputUpdateDropdown();
+  appliancesSearchInput.value = "";
   ustensilsSearchInputUpdateDropdown();
+  ustensilsSearchInput.value = "";
 };
 
 const toggleTagValue = (dataValue, value) => {
@@ -416,42 +398,49 @@ const removeFilterTag = (tag, filterTag) => {
     tag.querySelector("span").innerText
   );
   currentRecipes = recipes;
-  repiceSearchInputKeyDown();
+  recipeSearchInputKeyDown();
   ingredientsSearchInputUpdateDropdown();
   appliancesSearchInputUpdateDropdown();
   ustensilsSearchInputUpdateDropdown();
 };
 
 const ingredientsDropDownAdd = (arrayToSearchIn) => {
-  const dropdownListDOM = ingredientsDropdownListDOM(arrayToSearchIn);
+  const dropdownListDOM = generateDropdownListDOM(
+    arrayToSearchIn,
+    "ingredients"
+  );
   dropdownListIngredients.innerHTML = dropdownListDOM;
   const dropdownListElements = dropdownListIngredients.querySelectorAll("li");
-  for (let i = 0; i < dropdownListElements.length; i++) {
-    const value = dropdownListElements[i].querySelector("span").innerText;
+  Array.from(dropdownListElements).map((element) => {
+    const value = element.querySelector("span").innerText;
     // On n'ajoute seulement l'eventListenre si l'element ne se trouve pas deja dans la liste des ingredients
     if (currentTags["ingredients"].indexOf(value) === -1) {
-      dropdownListElements[i].addEventListener("click", addTag);
+      element.addEventListener("click", addTag);
     }
-  }
+  });
   currentlyShownIngredients = arrayToSearchIn;
 };
 
 const appliancesDropDownAdd = (arrayToSearchIn) => {
-  const dropdownListDOM = appliancesDropdownListDOM(arrayToSearchIn);
+  const dropdownListDOM = generateDropdownListDOM(
+    arrayToSearchIn,
+    "appliances"
+  );
   dropdownListAppliances.innerHTML = dropdownListDOM;
   const dropdownListElements = dropdownListAppliances.querySelectorAll("li");
-  for (let i = 0; i < dropdownListElements.length; i++) {
-    const value = dropdownListElements[i].querySelector("span").innerText;
-    // On n'ajoute seulement l'eventListenre si l'element ne se trouve pas deja dans la liste des ingredients
+  Array.from(dropdownListElements).map((element) => {
+    const value = element.querySelector("span").innerText;
+    // On n'ajoute seulement l'eventListener si l'element ne se trouve pas deja dans la liste des appliances
     if (currentTags["appliances"].indexOf(value) === -1) {
-      dropdownListElements[i].addEventListener("click", addTag);
+      element.addEventListener("click", addTag);
     }
-  }
+  });
+
   currentlyShownAppliances = arrayToSearchIn;
 };
 
 const ustensilsDropDownAdd = (arrayToSearchIn) => {
-  const dropdownListDOM = ustensilsDropdownListDOM(arrayToSearchIn);
+  const dropdownListDOM = generateDropdownListDOM(arrayToSearchIn, "ustensils");
   dropdownListUstensils.innerHTML = dropdownListDOM;
   const dropdownListElements = dropdownListUstensils.querySelectorAll("li");
   for (let i = 0; i < dropdownListElements.length; i++) {
@@ -494,7 +483,7 @@ const setupEventListeners = () => {
       filterButtonIsClicked(evt);
     });
   });
-  repiceSeachInput.addEventListener("keyup", repiceSearchInputKeyDown);
+  repiceSeachInput.addEventListener("keyup", recipeSearchInputKeyDown);
   ingredientsSearchInput.addEventListener(
     "keyup",
     ingredientsSearchInputUpdateDropdown
