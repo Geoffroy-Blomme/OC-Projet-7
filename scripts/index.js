@@ -170,15 +170,16 @@ const getNbOfTagsSelected = () => {
 // Renvoie un array contenant les elements de arrayToSearchIn qui contiennent dans leur titre, ingredients ou description le mot-cle mis en argument
 const searchRecipesThatContainsKeyword = (arrayToSearchIn, keyword) => {
   let finalArray = [];
-  for (let i = 0; i < arrayToSearchIn.length; i++) {
-    if (searchRecipeForName(arrayToSearchIn[i], keyword)) {
-      finalArray.push(arrayToSearchIn[i]);
-    } else if (searchRecipeForDescription(arrayToSearchIn[i], keyword)) {
-      finalArray.push(arrayToSearchIn[i]);
-    } else if (searchRecipeForIngredient(arrayToSearchIn[i], keyword)) {
-      finalArray.push(arrayToSearchIn[i]);
+  arrayToSearchIn.map((elt) => {
+    if (searchRecipeForName(elt, keyword)) {
+      finalArray.push(elt);
+    } else if (searchRecipeForDescription(elt, keyword)) {
+      finalArray.push(elt);
+    } else if (searchRecipeForIngredient(elt, keyword)) {
+      finalArray.push(elt);
     }
-  }
+  });
+
   return finalArray;
 };
 
@@ -199,25 +200,26 @@ const searchRecipeForDescription = (recipe, keyword) => {
 };
 
 const searchRecipeForIngredient = (recipe, keyword) => {
-  for (let i = 0; i < recipe.ingredients.length; i++) {
+  let bool = false;
+  recipe.ingredients.map((ingredientObject) => {
     if (
-      recipe.ingredients[i].ingredient
-        .toLowerCase()
-        .includes(keyword.toLowerCase())
+      ingredientObject.ingredient.toLowerCase().includes(keyword.toLowerCase())
     ) {
-      return true;
+      bool = true;
     }
-  }
-  return false;
+  });
+
+  return bool;
 };
 
 const searchRecipeForUstensil = (recipe, keyword) => {
-  for (let i = 0; i < recipe.ustensils.length; i++) {
-    if (recipe.ustensils[i].toLowerCase().includes(keyword.toLowerCase())) {
-      return true;
+  let bool = false;
+  recipe.ustensils.map((ustensilObject) => {
+    if (ustensilObject.toLowerCase().includes(keyword.toLowerCase())) {
+      bool = true;
     }
-  }
-  return false;
+  });
+  return bool;
 };
 
 const searchRecipeForAppliance = (recipe, keyword) => {
@@ -467,9 +469,9 @@ const addAllDropdowns = () => {
 const addEltIfNotInArrayCaseInsensitive = (elt, array) => {
   let arrayLowerCase = [];
   let eltLowerCase = elt.toLowerCase();
-  for (let i = 0; i < array.length; i++) {
-    arrayLowerCase.push(array[i].toLowerCase());
-  }
+  array.map((elt) => {
+    arrayLowerCase.push(elt.toLowerCase());
+  });
   // L'element en minuscule ne se trouve pas dans l'array avec tous ses elements en minuscules, donc on ajoute l'element de base dans l'array
   if (!arrayLowerCase.includes(eltLowerCase)) {
     array.push(elt);
