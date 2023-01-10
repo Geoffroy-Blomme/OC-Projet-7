@@ -22,20 +22,18 @@ export function recipeFactory() {
     function getIngrendientsDOM(ingredients) {
       let dom = ``;
       ingredients.map((ingredient) => {
-        let quantityText;
-        if (ingredient.quantity) {
-          quantityText = `: ${ingredient.quantity}`;
-        } else {
-          quantityText = "";
-        }
         dom += `<span class="card-body__bottom-side__ingredient">
             <span class="card-body__bottom-side__ingredient__title">
               ${ingredient.ingredient || ""}
             </span>
-            <span class="card-body__bottom-side__ingredient__quantity">
-              ${quantityText || ""}${ingredient.unit || ""}
-            </span>
-          </span>`;
+            ${
+              ingredient.quantity
+                ? `: <span class="card-body__bottom-side__ingredient__quantity"> 
+              ${ingredient.quantity || ""}${ingredient.unit || ""}
+              </span>`
+                : ""
+            }
+        </span>`;
       });
       return dom;
     }
@@ -65,5 +63,15 @@ export function recipeFactory() {
   </div>
 </div>`;
   }
-  return { getRecipeThumbDOM, getRecipesThumbDOM };
+
+  function getDropdownListDOM(array, tagType) {
+    let dom = ``;
+
+    array.forEach((elt) => {
+      dom += `<li data-value="${tagType}"><span>${elt}</span></li>`;
+    });
+    return dom;
+  }
+
+  return { getRecipeThumbDOM, getRecipesThumbDOM, getDropdownListDOM };
 }

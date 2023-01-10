@@ -42,6 +42,7 @@
   .opened {
     .btn {
       width: 100%;
+      min-width: 240px;
     }
     .filter-button__input {
       display: block;
@@ -82,12 +83,16 @@
       padding: 0;
       display: flex;
       flex-wrap: wrap;
-      flex-direction: column;
       max-height: 350px;
-      width: 400px;
+      width: 100%;
+      max-width: calc($filter-button-width * 4);
+      flex-direction: row;
       li {
-        margin-left: 19px;
-        margin-top: 10px;
+        width: $filter-button-width;
+        margin: 10px 20px;
+        span {
+          cursor: pointer;
+        }
       }
     }
   }
@@ -96,6 +101,16 @@
 .filter-tags {
   margin-top: 20px;
   .filter-tag {
+    margin-right: 20px;
+    &-ingredients {
+      background-color: $primary;
+    }
+    &-appliances {
+      background-color: $secondary;
+    }
+    &-ustensils {
+      background-color: $tertiary;
+    }
   }
 }
 .recipe-thumbs {

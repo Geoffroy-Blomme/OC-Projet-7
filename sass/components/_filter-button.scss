@@ -2,7 +2,7 @@
   .btn {
     color: $filter-btn-color;
     height: $filter-button-height;
-    width: 170px;
+    width: $filter-button-width;
     border-radius: $common-border-radius;
     font-size: 18px;
     display: inline-flex;
