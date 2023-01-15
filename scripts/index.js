@@ -44,51 +44,6 @@ export const getNbOfTagsSelected = () => {
   return nbOfTags;
 };
 
-// Renvoie un array contenant les elements de arrayToSearchIn qui contiennent dans leur titre, ingredients ou description le mot-cle mis en argument
-export const searchRecipesThatContainsKeyword = (arrayToSearchIn, keyword) => {
-  let finalArray = [];
-  arrayToSearchIn.map((elt) => {
-    if (searchRecipeForName(elt, keyword)) {
-      finalArray.push(elt);
-    } else if (searchRecipeForDescription(elt, keyword)) {
-      finalArray.push(elt);
-    } else if (searchRecipeForIngredient(elt, keyword)) {
-      finalArray.push(elt);
-    }
-  });
-
-  return finalArray;
-};
-
-const searchRecipeForName = (recipe, keyword) => {
-  if (recipe.name.toLowerCase().includes(keyword.toLowerCase())) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-const searchRecipeForDescription = (recipe, keyword) => {
-  if (recipe.description.toLowerCase().includes(keyword.toLowerCase())) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-export const searchRecipeForIngredient = (recipe, keyword) => {
-  let bool = false;
-  recipe.ingredients.map((ingredientObject) => {
-    if (
-      ingredientObject.ingredient.toLowerCase().includes(keyword.toLowerCase())
-    ) {
-      bool = true;
-    }
-  });
-
-  return bool;
-};
-
 export const emptyRecipeContainer = () => {
   recipeThumbs.innerHTML = "";
 };

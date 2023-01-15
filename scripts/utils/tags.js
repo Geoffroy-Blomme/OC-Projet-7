@@ -1,4 +1,8 @@
-import { searchRecipeForIngredient } from "../index.js";
+import {
+  searchRecipeForIngredient,
+  searchRecipeForAppliance,
+  searchRecipeForUstensil,
+} from "./search-recipe-for.js";
 import { recipes } from "../../data/recipes.js";
 import { recipeFactory } from "../factories//recipe.js";
 import { recipeSearchInputKeyDown } from "./main_search-bar.js";
@@ -89,20 +93,6 @@ const checkIfRecipeHasAllUstensils = (recipe) => {
     }
   }
   return true;
-};
-
-const searchRecipeForUstensil = (recipe, keyword) => {
-  let bool = false;
-  recipe.ustensils.map((ustensilObject) => {
-    if (ustensilObject.toLowerCase().includes(keyword.toLowerCase())) {
-      bool = true;
-    }
-  });
-  return bool;
-};
-
-const searchRecipeForAppliance = (recipe, keyword) => {
-  return recipe.appliance.toLowerCase().includes(keyword.toLowerCase());
 };
 
 // Retourne l'array mis en argument avec l'elt pousser dans l'array si l'elt n'a pas de doublon present dans l'array, en etant sensible a la casse.

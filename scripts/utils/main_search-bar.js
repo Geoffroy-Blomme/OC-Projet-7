@@ -1,5 +1,8 @@
 import { recipes } from "../../data/recipes.js";
-
+import {
+  searchRecipeForDescription,
+  searchRecipeForIngredient,
+} from "./search-recipe-for.js";
 import {
   searchRepicesThatContainsTags,
   allAppliances,
@@ -14,7 +17,6 @@ import {
   emptyRecipeContainer,
   noRecipesFound,
   getNbOfTagsSelected,
-  searchRecipesThatContainsKeyword,
   generateRecipThumbs,
 } from "../index.js";
 
@@ -74,4 +76,28 @@ export const startRecipeSearch = (arrayToSearchIn, inputValue) => {
     generateRecipThumbs(arrayContainKeyword);
   }
   return arrayContainKeyword;
+};
+
+// Renvoie un array contenant les elements de arrayToSearchIn qui contiennent dans leur titre, ingredients ou description le mot-cle mis en argument
+const searchRecipesThatContainsKeyword = (arrayToSearchIn, keyword) => {
+  let finalArray = [];
+  arrayToSearchIn.map((elt) => {
+    if (searchRecipeForName(elt, keyword)) {
+      finalArray.push(elt);
+    } else if (searchRecipeForDescription(elt, keyword)) {
+      finalArray.push(elt);
+    } else if (searchRecipeForIngredient(elt, keyword)) {
+      finalArray.push(elt);
+    }
+  });
+
+  return finalArray;
+};
+
+const searchRecipeForName = (recipe, keyword) => {
+  if (recipe.name.toLowerCase().includes(keyword.toLowerCase())) {
+    return true;
+  } else {
+    return false;
+  }
 };
