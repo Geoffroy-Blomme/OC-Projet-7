@@ -45,6 +45,8 @@ let currentlyShownUstensils = [];
 export const returnCurrentTags = () => {
   return currentTags;
 };
+
+// Prend les recettes contenus dans le tableau mis en parametre et renvoie un array contenant celles pour qui les tags actuellement selectionnes sont tous OK.
 export const searchRepicesThatContainsTags = (arrayToSearchIn) => {
   let finalArray = [];
   for (let i = 0; i < arrayToSearchIn.length; i++) {
@@ -62,6 +64,7 @@ export const searchRepicesThatContainsTags = (arrayToSearchIn) => {
   return finalArray;
 };
 
+// Renvoie true si la recette mise en parametre contient toutes les appliances qui sont actuellement ajoutes en tag.
 const checkIfRecipeHasAllAppliances = (recipe) => {
   if (currentTags["appliances"].length === 0) {
     return true;
@@ -74,6 +77,7 @@ const checkIfRecipeHasAllAppliances = (recipe) => {
   return true;
 };
 
+// Renvoie true si la recette mise en parametre contient toutes les ingredients qui sont actuellement ajoutes en tag.
 const checkIfRecipeHasAllIngredients = (recipe) => {
   if (currentTags["ingredients"].length === 0) {
     return true;
@@ -86,6 +90,7 @@ const checkIfRecipeHasAllIngredients = (recipe) => {
   return true;
 };
 
+// Renvoie true si la recette mise en parametre contient toutes les ustensils qui sont actuellement ajoutes en tag.
 const checkIfRecipeHasAllUstensils = (recipe) => {
   if (currentTags["ustensils"].length === 0) {
     return true;
@@ -113,6 +118,7 @@ const addEltIfNotInArrayCaseInsensitive = (elt, array) => {
   return array;
 };
 
+// Ajoute tous les dropdowns des tags.
 export const addAllDropdowns = () => {
   const allUstensil = allUstensils(recipes);
   ustensilsDropDownAdd(allUstensil);
@@ -122,6 +128,7 @@ export const addAllDropdowns = () => {
   ingredientsDropDownAdd(allIngredient);
 };
 
+// Renvoie toutes les appliances que contient la recette mise en parametre
 export const allAppliances = (arrayOfRecipes) => {
   let finalArray = [];
   arrayOfRecipes.map((recipe) => {
@@ -131,6 +138,7 @@ export const allAppliances = (arrayOfRecipes) => {
   return finalArray;
 };
 
+// Genere le dropdown des ingredients qui se trouve dans l'array mis en parametre
 export const ingredientsDropDownAdd = (arrayToSearchIn) => {
   const dropdownListDOM = generateDropdownListDOM(
     arrayToSearchIn,
@@ -148,6 +156,7 @@ export const ingredientsDropDownAdd = (arrayToSearchIn) => {
   currentlyShownIngredients = arrayToSearchIn;
 };
 
+// Genere le dropdown des ingredients qui se trouve dans l'array mis en parametre
 export const appliancesDropDownAdd = (arrayToSearchIn) => {
   const dropdownListDOM = generateDropdownListDOM(
     arrayToSearchIn,
@@ -166,12 +175,7 @@ export const appliancesDropDownAdd = (arrayToSearchIn) => {
   currentlyShownAppliances = arrayToSearchIn;
 };
 
-const generateDropdownListDOM = (arrayToSearchIn, tagType) => {
-  const recipeModal = recipeFactory();
-  const finalDom = recipeModal.getDropdownListDOM(arrayToSearchIn, tagType);
-  return finalDom;
-};
-
+// Genere le dropdown des ingredients qui se trouve dans l'array mis en parametre
 export const ustensilsDropDownAdd = (arrayToSearchIn) => {
   const dropdownListDOM = generateDropdownListDOM(arrayToSearchIn, "ustensils");
   dropdownListUstensils.innerHTML = dropdownListDOM;
@@ -186,6 +190,13 @@ export const ustensilsDropDownAdd = (arrayToSearchIn) => {
   currentlyShownUstensils = arrayToSearchIn;
 };
 
+const generateDropdownListDOM = (arrayToSearchIn, tagType) => {
+  const recipeModal = recipeFactory();
+  const finalDom = recipeModal.getDropdownListDOM(arrayToSearchIn, tagType);
+  return finalDom;
+};
+
+// Genere le tag mis en parametre avec la valeur mise en parametre.
 const makeFilterTag = (tag, value) => {
   const tagtext = tag.getAttribute("data-value");
   const filterTag = document.createElement("div");
@@ -221,6 +232,7 @@ const removeFilterTag = (tag, filterTag) => {
   recipeSearchInputKeyDown();
 };
 
+// Est appele lorsqu'un tag est appuye.
 const addTag = (evt) => {
   const dataValue = evt.currentTarget.getAttribute("data-value");
   const value = evt.currentTarget.querySelector("span").innerText;

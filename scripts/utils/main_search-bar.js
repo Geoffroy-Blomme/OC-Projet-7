@@ -54,6 +54,7 @@ export const resetCurrentRecipes = () => {
   currentRecipes = recipes;
 };
 
+// Lance la recherche.
 export const startRecipeSearch = (arrayToSearchIn, inputValue) => {
   emptyRecipeContainer();
   let nbOfTagsSelected = getNbOfTagsSelected();
@@ -99,6 +100,7 @@ const searchRecipesThatContainsKeyword = (arrayToSearchIn, keyword) => {
   return finalArray;
 };
 
+// Renvoie vrai si la recette contient le nom mis en parametre.
 const searchRecipeForName = (recipe, keyword) => {
   if (recipe.name.toLowerCase().includes(keyword.toLowerCase())) {
     return true;
