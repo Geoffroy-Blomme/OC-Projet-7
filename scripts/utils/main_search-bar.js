@@ -43,11 +43,7 @@ export const recipeSearchInputKeyDown = (evt) => {
   }
 
   if (nbOfCharacters >= 3) {
-    console.log("avant :");
-    console.log(currentRecipes);
     currentRecipes = startRecipeSearch(currentRecipes, inputValue);
-    console.log("apres :");
-    console.log(currentRecipes);
   } else {
     currentRecipes = startRecipeSearch(currentRecipes, "");
   }
