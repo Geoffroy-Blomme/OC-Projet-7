@@ -5,7 +5,10 @@ import {
 } from "./search-recipe-for.js";
 import { recipes } from "../../data/recipes.js";
 import { recipeFactory } from "../factories//recipe.js";
-import { recipeSearchInputKeyDown } from "./main_search-bar.js";
+import {
+  recipeSearchInputKeyDown,
+  resetCurrentRecipes,
+} from "./main_search-bar.js";
 // Va contenir les tags qui ont ete choisi par l'utilisateur
 let currentTags = { ingredients: [], appliances: [], ustensils: [] };
 
@@ -211,10 +214,11 @@ const removeFilterTag = (tag, filterTag) => {
     tag.getAttribute("data-value"),
     tag.querySelector("span").innerText
   );
-  recipeSearchInputKeyDown();
+  resetCurrentRecipes();
   ingredientsSearchInputUpdateDropdown();
   appliancesSearchInputUpdateDropdown();
   ustensilsSearchInputUpdateDropdown();
+  recipeSearchInputKeyDown();
 };
 
 const addTag = (evt) => {

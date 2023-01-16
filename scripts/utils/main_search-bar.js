@@ -34,18 +34,28 @@ export const recipeSearchInputKeyDown = (evt) => {
   if (evt) {
     if (evt.keyCode == deleteKeyCode) {
       // L'utilisateur a supprimer un caractere, nous devons faire la recherche a partir de tous les recettes.
-      currentRecipes = recipes;
+      resetCurrentRecipes();
       // On va seulement re-generer la totalite des recettes lorsqu'on passe de 3 caracteres a 2, car si on passe de 2 a 1, rien ne change.
       if (nbOfCharacters === 2) {
         currentRecipes = startRecipeSearch(currentRecipes, "");
       }
     }
   }
+
   if (nbOfCharacters >= 3) {
+    console.log("avant :");
+    console.log(currentRecipes);
     currentRecipes = startRecipeSearch(currentRecipes, inputValue);
+    console.log("apres :");
+    console.log(currentRecipes);
   } else {
     currentRecipes = startRecipeSearch(currentRecipes, "");
   }
+};
+
+// Rend sa valeur initialle a currentRecipes (elle contenira toutes les recettes).
+export const resetCurrentRecipes = () => {
+  currentRecipes = recipes;
 };
 
 export const startRecipeSearch = (arrayToSearchIn, inputValue) => {
