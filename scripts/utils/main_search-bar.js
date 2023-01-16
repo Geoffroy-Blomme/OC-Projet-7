@@ -43,11 +43,7 @@ export const recipeSearchInputKeyDown = (evt) => {
   }
 
   if (nbOfCharacters >= 3) {
-    console.log("avant :");
-    console.log(currentRecipes);
     currentRecipes = startRecipeSearch(currentRecipes, inputValue);
-    console.log("apres :");
-    console.log(currentRecipes);
   } else {
     currentRecipes = startRecipeSearch(currentRecipes, "");
   }
@@ -91,16 +87,15 @@ export const startRecipeSearch = (arrayToSearchIn, inputValue) => {
 // Renvoie un array contenant les elements de arrayToSearchIn qui contiennent dans leur titre, ingredients ou description le mot-cle mis en argument
 const searchRecipesThatContainsKeyword = (arrayToSearchIn, keyword) => {
   let finalArray = [];
-  arrayToSearchIn.map((elt) => {
-    if (searchRecipeForName(elt, keyword)) {
-      finalArray.push(elt);
-    } else if (searchRecipeForDescription(elt, keyword)) {
-      finalArray.push(elt);
-    } else if (searchRecipeForIngredient(elt, keyword)) {
-      finalArray.push(elt);
+  for (let i = 0; i < arrayToSearchIn.length; i++) {
+    if (searchRecipeForName(arrayToSearchIn[i], keyword)) {
+      finalArray.push(arrayToSearchIn[i]);
+    } else if (searchRecipeForDescription(arrayToSearchIn[i], keyword)) {
+      finalArray.push(arrayToSearchIn[i]);
+    } else if (searchRecipeForIngredient(arrayToSearchIn[i], keyword)) {
+      finalArray.push(arrayToSearchIn[i]);
     }
-  });
-
+  }
   return finalArray;
 };
 

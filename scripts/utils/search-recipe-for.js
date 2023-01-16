@@ -1,10 +1,11 @@
 const searchRecipeForUstensil = (recipe, keyword) => {
   let bool = false;
-  recipe.ustensils.map((ustensilObject) => {
-    if (ustensilObject.toLowerCase().includes(keyword.toLowerCase())) {
+  for (let i = 0; i < recipe.ustensils.length; i++) {
+    if (recipe.ustensils[i].toLowerCase().includes(keyword.toLowerCase())) {
       bool = true;
     }
-  });
+  }
+
   return bool;
 };
 
@@ -22,13 +23,15 @@ const searchRecipeForDescription = (recipe, keyword) => {
 
 const searchRecipeForIngredient = (recipe, keyword) => {
   let bool = false;
-  recipe.ingredients.map((ingredientObject) => {
+  for (let i = 0; i < recipe.ingredients.length; i++) {
     if (
-      ingredientObject.ingredient.toLowerCase().includes(keyword.toLowerCase())
+      recipe.ingredients[i].ingredient
+        .toLowerCase()
+        .includes(keyword.toLowerCase())
     ) {
       bool = true;
     }
-  });
+  }
 
   return bool;
 };
